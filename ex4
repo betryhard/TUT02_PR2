@@ -1,0 +1,99 @@
+public class Product {
+    // --- Các thuộc tính Static (Dùng chung cho toàn bộ lớp) ---
+    private static int productCount = 0; // Đếm tổng số sản phẩm [cite: 654]
+    private static double totalRevenue = 0; // Tổng doanh thu tiềm năng 
+    private static double totalDiscount = 0; // Tổng tiền giảm giá [cite: 656]
+
+    // --- Các thuộc tính Instance (Riêng cho từng đối tượng) ---
+    private String name;
+    private double price;
+    private double discount; // Phần trăm giảm giá (ví dụ: 10 cho 10%)
+    private int quantity; // Số lượng tồn kho [cite: 659]
+
+    // --- Constructors ---
+    // Constructor đầy đủ tham số
+    public Product(String name, double price, double discount, int quantity) {
+        this.name = name;
+        this.price = price;
+        this.discount = discount;
+        this.quantity = quantity;
+        
+        // Cập nhật các thông số static khi tạo mới [cite: 661, 663]
+        productCount++; 
+        updateGlobalStats(price, discount, quantity, true);
+    }
+
+    // Constructor 2 tham số (mặc định không giảm giá, số lượng = 0)
+    public Product(String name, double price) {
+        this(name, price, 0, 0);
+    }
+
+    // --- Các phương thức Static ---
+    public static void displayStatistics() {
+        System.out.println("=== Product Statistics ===");
+        System.out.println("Total Products Created: " + productCount); [cite: 695]
+        System.out.println("Total Potential Revenue: $" + totalRevenue); [cite: 696]
+        double avgDiscount = (productCount == 0) ? 0 : totalDiscount / productCount;
+        System.out.printf("Average Discount: %.2f%%\n", avgDiscount); [cite: 696]
+        System.out.println("==========================");
+    }
+
+    // --- Các phương thức Instance ---
+    public void updateQuantity(int newQuantity) {
+        // Trừ đi giá trị cũ của sản phẩm này khỏi tổng chung trước khi cập nhật
+        updateGlobalStats(this.price, this.discount, this.quantity, false);
+        
+        this.quantity = newQuantity; [cite: 671]
+        
+        // Cộng lại giá trị mới vào tổng chung [cite: 672]
+        updateGlobalStats(this.price, this.discount, this.quantity, true);
+    }
+
+    private double getImportTax() {
+        return price * 0.1;
+    }
+
+    public void displayInfo() {
+        System.out.println("Product: " + name); [cite: 679]
+        System.out.println("Price: $" + price); [cite: 680]
+        System.out.println("Discount: " + discount + "%"); [cite: 681]
+        System.out.println("Quantity: " + quantity); [cite: 682]
+        System.out.println("Import Tax: $" + getImportTax()); [cite: 683]
+        System.out.println("-------------------------");
+    }
+
+    // Hàm hỗ trợ cập nhật biến static để tránh lặp code
+    private static void updateGlobalStats(double p, double d, int q, boolean isAdding) {
+        double itemDiscount = (p * q) * (d / 100);
+        double itemRevenue = (p * q) - itemDiscount;
+
+        if (isAdding) {
+            totalRevenue += itemRevenue;
+            totalDiscount += d;
+        } else {
+            totalRevenue -= itemRevenue;
+            totalDiscount -= d;
+        }
+    }
+}
+public class ProductStatisticsDemo {
+    public static void main(String[] args) {
+        // 1. Tạo ít nhất 3 sản phẩm [cite: 674]
+        Product p1 = new Product("Laptop", 1000.0, 10.0, 50); [cite: 679, 681, 682]
+        Product p2 = new Product("Mouse", 25.0, 5.0, 200); [cite: 684, 686, 687]
+        Product p3 = new Product("Keyboard", 75.0, 0.0, 100); [cite: 689, 691, 692]
+
+        // 2. Hiển thị thông tin từng sản phẩm [cite: 675]
+        p1.displayInfo();
+        p2.displayInfo();
+        p3.displayInfo();
+
+        // 3. Hiển thị thống kê tổng thể [cite: 676]
+        Product.displayStatistics();
+
+        // 4. Cập nhật số lượng và xem sự thay đổi [cite: 677]
+        System.out.println("\nUpdating Laptop quantity to 60...");
+        p1.updateQuantity(60);
+        Product.displayStatistics();
+    }
+}
