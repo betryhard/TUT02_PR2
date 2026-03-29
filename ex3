@@ -1,0 +1,47 @@
+
+
+public class Product {
+    // Các thuộc tính (attributes) 
+    private String name;
+    private double price;
+    private double discount;
+
+     public Produc(String name, double price, double discount){
+    this.name=name;
+    this.price=price;
+    this.discount=discount;
+
+} 
+    public Produc(String name, double price, 0){
+    this(name, price, 0);
+}
+
+    // Phương thức tính thuế nhập khẩu (10% giá)
+    private double getImportTax() {
+        return price * 0.1;
+    }
+
+
+    // Phương thức hiển thị thông tin 
+    public void displayInfo() {
+        System.out.println("-------------------------------");
+        System.out.println("Tên sản phẩm: " + name); 
+        System.out.println("Đơn giá: " + price); 
+        System.out.println("Giảm giá: " + discount); 
+        System.out.println("Thuế nhập khẩu: " + getImportTax());
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        // Tạo sản phẩm 1: Có giảm giá (Sử dụng Constructor 3 tham số) 
+        Product p1 = new Product("Laptop Gaming", 1200.0, 15.0);
+
+        // Tạo sản phẩm 2: Không giảm giá (Sử dụng Constructor 2 tham số) 
+        Product p2 = new Product("Chuột không dây", 25.0);
+
+        System.out.println("===== THÔNG TIN SẢN PHẨM (EX 3) =====");
+        p1.displayInfo();
+        p2.displayInfo();
+    }
+}
+}
