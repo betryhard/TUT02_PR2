@@ -1,0 +1,52 @@
+import java.util.Scanner;
+
+public class Product {
+    // Các thuộc tính (attributes) 
+    public String name;
+    public double price;
+    public double discount;
+
+    // Phương thức tính thuế nhập khẩu (10% giá)
+    public double getImportTax() {
+        return price * 0.1;
+    }
+
+    // Phương thức nhập dữ liệu từ bàn phím 
+    public void input() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print(" - Nhập tên sản phẩm: ");
+        this.name = sc.nextLine();
+        System.out.print(" - Nhập đơn giá: ");
+        this.price = sc.nextDouble();
+        System.out.print(" - Nhập giảm giá: ");
+        this.discount = sc.nextDouble();
+    }
+
+    // Phương thức hiển thị thông tin 
+    public void displayInfo() {
+        System.out.println("-------------------------------");
+        System.out.println("Tên sản phẩm: " + name); 
+        System.out.println("Đơn giá: " + price);
+        System.out.println("Giảm giá: " + discount); 
+        System.out.println("Thuế nhập khẩu: " + getImportTax()); 
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        // Bước 1: Tạo 2 đối tượng product1 và product2 [cite: 643]
+        Product product1 = new Product();
+        Product product2 = new Product();
+
+        // Bước 2: Gọi phương thức input() cho từng đối tượng [cite: 644]
+        System.out.println("NHẬP THÔNG TIN SẢN PHẨM 1:");
+        product1.input();
+
+        System.out.println("\nNHẬP THÔNG TIN SẢN PHẨM 2:");
+        product2.input();
+
+        // Bước 3: Gọi phương thức displayInfo() để xuất dữ liệu [cite: 645]
+        System.out.println("\n===== THÔNG TIN CÁC SẢN PHẨM =====");
+        product1.displayInfo();
+        product2.displayInfo();
+    }
+}
