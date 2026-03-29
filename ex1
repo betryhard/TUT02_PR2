@@ -1,0 +1,31 @@
+import java.util.Scanner;
+public class Product{
+    public String name;
+    public double price, discount;
+    public double getImportTax(){
+     return price*0.1;
+
+    }
+    public void input(){
+        Scanner sc = new Scanner(System.in);
+        name = sc.nextLine();
+        discount = sc.nextDouble();
+        price = sc.nextDouble();
+      
+    }
+    public void displayInfo(){
+        System.out.println("The information displayed on the screen should include: ");
+        System.out.println("productName: "+name);
+        System.out.println("discount: "+discount);
+        System.out.println("unitPrice: "+price);
+        System.out.println("Import tax: "+ this.getImportTax());
+    }
+    
+}
+public class Main {
+    public static void main(String[] args) {
+        Product p = new Product();
+        p.input();
+        p.displayInfo();
+    }
+}
